@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Modal, Button, Form, Input, Select } from "antd";
+import { Modal, Button, Form, Input, Select, InputNumber } from "antd";
 import { productsContext } from "../../contexts/productsContext";
 import { brandsContext } from "../../contexts/brandsContext";
 
@@ -91,7 +91,7 @@ const AddProductModal = () => {
               },
             ]}
           >
-            <Input />
+            <InputNumber min={1} style={{width:"100%"}} />
           </Form.Item>
               <Form.Item
             label="Image"

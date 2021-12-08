@@ -12,20 +12,23 @@ import Header from "./components/Header/Header";
 
 import 'antd/dist/antd.css';
 import './App.css'
+import CartContextProvider from "./contexts/cartContext";
 
 const App = () => {
   
   return (
     <AuthContextProvider>
-      <BrandsContextProvider>
-        <ProductsContextProvider>
-          <BrowserRouter>
-            <Header />
-            <Routing />
-            <Footer />
-          </BrowserRouter>
-        </ProductsContextProvider>
-    </BrandsContextProvider>
+      <CartContextProvider>
+          <BrandsContextProvider>
+            <ProductsContextProvider>
+              <BrowserRouter>
+                <Header />
+                <Routing />
+                <Footer />
+              </BrowserRouter>
+            </ProductsContextProvider>
+         </BrandsContextProvider>
+     </CartContextProvider>
     </AuthContextProvider>
   );
 };

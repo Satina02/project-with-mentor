@@ -9,12 +9,17 @@ export const productsContext = React.createContext();
 const INIT_STATE = {
   products: [],
   oneProduct: null,
+  productsTotalCount: 0,
 };
 
 const reducer = (state = INIT_STATE, action) => {
   switch (action.type) {
     case CASE_GET_PRODUCTS:
-      return { ...state, products: action.payload.data };
+      return {
+        ...state,
+        products: action.payload.data,
+        productsTotalCount: action.payload.headers["x-total-count"],
+      };
     case CASE_GET_ONE_PRODUCT:
       return { ...state, oneProduct: action.payload.data };
     default:
@@ -25,13 +30,13 @@ const reducer = (state = INIT_STATE, action) => {
 const ProductsContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, INIT_STATE);
 
-  async function createProduct (newProduct){
-    await axios.post(PRODUCTS_API, newProduct)
-    getProducts()
+  async function createProduct(newProduct) {
+    await axios.post(PRODUCTS_API, newProduct);
+    getProducts();
   }
-
   async function getProducts() {
-    let result = await axios.get(PRODUCTS_API);
+    let result = await axios.get(`${PRODUCTS_API}${window.location.search}`);
+    // console.log("getProducts result", result);
     dispatch({
       type: CASE_GET_PRODUCTS,
       payload: result,
@@ -46,14 +51,14 @@ const ProductsContextProvider = ({ children }) => {
     });
   }
 
-  async function deleteProduct (id){
-      await axios.delete(`${PRODUCTS_API}/${id}`)
-      getProducts()
+  async function deleteProduct(id) {
+    await axios.delete(`${PRODUCTS_API}/${id}`);
+    getProducts();
   }
 
-  async function updateProduct (id, editedProduct){
-      await axios.patch(`${PRODUCTS_API}/${id}`, editedProduct)
-      getProducts()
+  async function updateProduct(id, editedProduct) {
+    await axios.patch(`${PRODUCTS_API}/${id}`, editedProduct);
+    getProducts();
   }
 
   return (
@@ -61,6 +66,7 @@ const ProductsContextProvider = ({ children }) => {
       value={{
         products: state.products,
         oneProduct: state.oneProduct,
+        productsTotalCount: state.productsTotalCount,
         getProducts,
         getOneProduct,
         deleteProduct,

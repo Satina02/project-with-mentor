@@ -1,21 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
-import { Card, Input, Pagination } from "antd";
-import {
-  ShoppingCartOutlined,
-  EllipsisOutlined,
-  StarOutlined,
-} from "@ant-design/icons";
+import { Input, Pagination, Empty } from "antd";
+
 
 import { productsContext } from "../../contexts/productsContext";
+import ProductCard from './ProductCard'
 
 import "./ProductList.css";
 import Filters from "../Filters/Filters";
 
-const { Meta } = Card;
 
 const ProductsList = () => {
+  
   const [searchParams, setSearchParams] = useSearchParams();
   const [search, setSearch] = useState(
     searchParams.get("q") ? searchParams.get("q") : ""
@@ -26,6 +23,8 @@ const ProductsList = () => {
   const [limit, setLimit] = useState(
     searchParams.get("_limit") ? searchParams.get("_limit") : 4
   );
+  const [brand, setBrand] = useState([])
+  const [price, setPrice] = useState([1, 1000000])
   const [showFilters, setShowFilters] = useState(false)
   const { getProducts, products, productsTotalCount } =
     useContext(productsContext);
@@ -34,6 +33,9 @@ const ProductsList = () => {
       q: search,
       _page: page,
       _limit: limit,
+      brand: brand,
+      price_gte: price[0],
+      price_lte: price[1],
     });
   }, []);
   useEffect(() => {
@@ -44,8 +46,11 @@ const ProductsList = () => {
       q: search,
       _page: page,
       _limit: limit,
+      brand: brand,
+      price_gte: price[0],
+      price_lte: price[1],
     });
-  }, [search, page, limit]);
+  }, [search, page, limit, brand, price]);
   console.log(products);
   return (
     <div className="container" style={{ marginTop: "20px" }}>
@@ -60,38 +65,11 @@ const ProductsList = () => {
           placeholder="Search..."
         />
       </div>
-      {showFilters ? <Filters /> : null}
+      {showFilters ? <Filters brand={brand} setBrand={setBrand} price={price} setPrice={setPrice} /> : null}
       <div className="products-list">
-        {products.map((item) => (
-          <Card
-            hoverable
-            key={item.id}
-            style={{ width: "280px", margin: "10px" }}
-            cover={<img alt="example" src={item.image1} />}
-            actions={[
-              <StarOutlined style={{ color: "black", fontSize: "25px" }} />,
-              <ShoppingCartOutlined
-                style={{ color: "black", fontSize: "25px" }}
-              />,
-              <Link to={`/products/${item.id}`}>
-                <EllipsisOutlined
-                  style={{ color: "black", fontSize: "25px" }}
-                  key="ellipsis"
-                />
-              </Link>,
-            ]}
-          >
-            <Meta
-              title={item.brand}
-              description={
-                <>
-                  <h3>{item.model}</h3>
-                  <h2>{"$" + item.price}</h2>
-                </>
-              }
-            />
-          </Card>
-        ))}
+        {products.length > 0 ? products.map((item) => (
+          <ProductCard  item={item} />
+        )): <Empty style={{marginBottom:"20px"}} /> }
       </div>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <Pagination

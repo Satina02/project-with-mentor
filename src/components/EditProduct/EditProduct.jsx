@@ -3,7 +3,7 @@ import { useParams } from 'react-router';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react/cjs/react.development';
 import { productsContext } from '../../contexts/productsContext';
-import { Button, Form, Input, Select } from "antd";
+import { Button, Form, Input, Select, InputNumber } from "antd";
 import { brandsContext } from '../../contexts/brandsContext';
 
 
@@ -87,7 +87,7 @@ const EditProduct = () => {
               },
             ]}
           >
-            <Input />
+            <InputNumber min={1} style={{width:"100%"}} />
           </Form.Item>
               <Form.Item
             label="Image"

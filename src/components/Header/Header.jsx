@@ -70,11 +70,13 @@ const Header = () => {
           />
         </Link>
         <div>
-          <Badge count={5}>
-            <ShoppingCartOutlined
-              style={{ fontSize: "30px", cursor: "pointer" }}
-            />
-          </Badge>
+          <Link to="/cart">
+            <Badge count={5}>
+              <ShoppingCartOutlined
+                style={{ fontSize: "30px", cursor: "pointer" }}
+              />
+            </Badge>
+          </Link>
         </div>
       </div>
       <div className="navbar">
@@ -90,6 +92,13 @@ const Header = () => {
             {item.title}
           </Link>
         ))}
+        {email === "talaibekova_s@iuca.kg" ? (<Link to="/admin" 
+        className={
+              location.pathname === '/admin'
+                ? "navbar__item-active"
+                : "navbar__item"
+            }>Admin</Link>) : null}
+        
       </div>
     </>
   );
