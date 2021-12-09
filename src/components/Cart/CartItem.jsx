@@ -3,8 +3,8 @@ import { InputNumber, List, Button } from "antd";
 import { cartContext } from "../../contexts/cartContext";
 
 const CartItem = ({ item }) => {
-    const {deleteFromCart} = useContext(cartContext);
-    console.log(item);
+    const {deleteFromCart, changeProductCount} = useContext(cartContext);
+    // console.log(item);
   return (
     <List.Item
       key={item.id}
@@ -27,10 +27,10 @@ const CartItem = ({ item }) => {
         <div>{item.item.description}</div>
         <div>
         <div style={{display:"flex", justifyContent:"space-between", width:"40%", marginTop:"20px"}}>
-            <div>Quality</div>
-                <Button>-</Button>
+            <h4>Quality</h4>
+                <Button onClick={() => changeProductCount(item.count -1, item.item.id)}>-</Button>
                 <InputNumber value={item.count} disabled/>
-                <Button>+</Button>
+                <Button onClick={() => changeProductCount(item.count +1, item.item.id)}>+</Button>
             </div>
            <div>
                 <h4>SubPrice</h4>

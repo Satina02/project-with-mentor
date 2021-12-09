@@ -14,6 +14,8 @@ import 'antd/dist/antd.css';
 import './App.css'
 import CartContextProvider from "./contexts/cartContext";
 
+
+
 const App = () => {
   
   return (
@@ -34,3 +36,15 @@ const App = () => {
 };
 
 export default App;
+
+
+/*
+CRUD
+фильтрация
+пагинация
+поис
+корзина
+роутинг
+админка
+
+*/ 

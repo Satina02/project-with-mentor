@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import {Card} from 'antd';
 import { Link } from 'react-router-dom';
 import {
@@ -13,6 +13,9 @@ import { useState } from 'react/cjs/react.development';
 const ProductCard = ({item}) => {
     const {addProductToCart, checkItemInCart} = useContext(cartContext); 
     const [checkInCart, setCheckInCart] = useState(checkItemInCart(item.id));
+    useEffect(() => {
+      setCheckInCart(setCheckInCart(item.id))
+    })
     return (
         <Card
             hoverable

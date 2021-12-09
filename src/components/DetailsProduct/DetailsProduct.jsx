@@ -33,7 +33,7 @@ const DetailsProduct = () => {
           <div style={{width:"40vw"}}>
               <h2>{product.brand}</h2> 
               <h3>{product.model}</h3>
-              <h2>{product.price}</h2>
+              <h2>{"$" + product.price}</h2>
               <Button size="large" style={{margin:"15px 0px", width:"100%"}}>Add to Cart</Button>
               <div>{product.description}</div>
           </div>

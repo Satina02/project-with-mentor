@@ -1,7 +1,10 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Prompt&family=Roboto:wght@300&family=Varela+Round&display=swap');
 *{
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    
 }
 
 .container{

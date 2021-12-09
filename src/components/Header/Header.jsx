@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 import { Badge } from "antd";
@@ -7,6 +7,7 @@ import { ShoppingCartOutlined } from "@ant-design/icons";
 import { useAuth } from "../../contexts/authContext";
 
 import "./Header.css";
+import { cartContext } from "../../contexts/cartContext";
 
 const Header = () => {
   const location = useLocation();
@@ -14,6 +15,10 @@ const Header = () => {
     handleLogout,
     user: { email },
   } = useAuth();
+  const {getCart, cartLength} = useContext(cartContext)
+  useEffect(()=>{
+    getCart()
+  }, [])
   const NAV_ITEMS = [
     {
       title: "BRANDS A-Z",
@@ -71,7 +76,7 @@ const Header = () => {
         </Link>
         <div>
           <Link to="/cart">
-            <Badge count={5}>
+            <Badge count={+cartLength}>
               <ShoppingCartOutlined
                 style={{ fontSize: "30px", cursor: "pointer" }}
               />

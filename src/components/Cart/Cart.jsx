@@ -8,14 +8,14 @@ const Cart = () => {
   useEffect(() => {
     getCart();
   }, []);
-//   console.log(cart);
+  console.log(cart);
   return (
     <div className="container">
       <List
         itemLayout="vertical"
         size="large"
         dataSource={cart?.products}
-        footer={<h2>Total</h2>}
+        footer={<h2>Total: {cart?.totalPrice}$</h2>}
         renderItem={(item) => <CartItem item={item}/>}
       />
     </div>
